@@ -1,0 +1,117 @@
+class User:
+    def __init__(self, name, balance):
+        self.name = name
+        self.balance = balance
+        self.portfolio = {}
+        self.price_history = {}
+
+    def view_portfolio(self):
+        return self.portfolio
+
+
+class StockSystem:
+    def __init__(self):
+        self.stock_prices = {'EN': 5, 'TO': 10}
+        self.price_history = {'EN': [], 'TO': []}
+    
+    def buy_stock(self, user, symbol, amount):
+        if symbol in self.stock_prices and user.balance >= self.stock_prices[symbol] * amount:
+            user.balance -= self.stock_prices[symbol] * amount
+            if symbol in user.portfolio:
+                user.portfolio[symbol] += amount
+            else:
+                user.portfolio[symbol] = amount
+            self.price_history[symbol].append(self.stock_prices[symbol])
+            
+            execute_long_method(user)
+        else:
+            print(f"Transaction failed for {user.name}")
+
+    def sell_stock(self, user, symbol, amount):
+        if symbol in user.portfolio and user.portfolio[symbol] >= amount:
+            user.balance += self.stock_prices[symbol] * amount
+            user.portfolio[symbol] -= amount
+            self.price_history[symbol].append(self.stock_prices[symbol])
+        else:
+            print(f"Transaction failed for {user.name}")
+
+    def show_price_history(self, symbol):
+        return self.price_history.get(symbol, [])
+
+    def show_balance(self, user):
+        return user.balance
+
+    def show_owned_stocks(self, user):
+        return user.portfolio
+
+
+def execute_long_method(user):
+    output_summary(user)
+    analyze_totals(user)
+    examine_stocks(user)
+    calculate_average_price(user)
+    long_term_projections(user)
+    final_checks(user)
+
+def output_summary(user):
+    totals = sum(user.portfolio.values())  
+    print(f"Total stocks owned by {user.name}: {totals}")
+    print("User has stocks." if totals > 0 else "User has no stocks.")
+
+def analyze_totals(user):
+    earnings = calculate_earnings(user)
+    print(f"Earnings potential: {earnings}")
+    print("User is in debt!" if user.balance < 0 else "User is financially stable.")
+    print("User has substantial earnings." if earnings > 100 else "User's earnings are below expectations.")
+
+def calculate_earnings(user):
+    earnings = sum(user.portfolio[stock] * 5 for stock in user.portfolio)
+    return earnings
+
+def examine_stocks(user):
+    for stock in user.portfolio:
+        print(f"Owned: {user.portfolio[stock]} of {stock}")
+        print(f"Checking stock {stock}")
+    check_specific_stock("EN")
+    for _ in range(3):
+        print("Verifying stock ownership...")
+    print("Completed verification.")
+
+def check_specific_stock(stock):
+    if stock == "EN":
+        print("This is En stock.")
+
+def calculate_average_price(user):
+    price_recorded = [user.portfolio[stock] * 5 for stock in user.portfolio]
+    average_price = sum(price_recorded) / len(price_recorded) if price_recorded else 0
+    print(f"Average stock price for owned stocks: {average_price}")
+    print("User's stocks are above average price." if average_price > 7 else "User's stocks are below average price.")
+
+def long_term_projections(user):
+    print("Calculating long-term projections...")
+    for i in range(5):
+        print(f"Projection year {i + 1}...")
+    print("Projections completed.")
+
+def final_checks(user):
+    print("All checks complete.")
+    print(f"User {user.name}'s review finished.")
+    totals = sum(user.portfolio.values())
+    print("Final balance check." if totals > 0 else "No stocks to check.")
+    print("Summary of stocks completed.")
+    print("Final earnings projection passed.")
+    print("Business analysis for stocks concluded.")
+    print("All system checks completed.")
+    print("End of method execution.")
+
+
+if __name__ == '__main__':
+    user = User("Bob",1000)
+    user.view_portfolio()
+    ss = StockSystem()
+    ss.buy_stock(user,"AA",50)
+    ss.sell_stock(user,"AA",20)
+    ss.show_price_history("AA")
+    ss.show_balance(user)
+    ss.show_owned_stocks(user)
+    execute_long_method(user)

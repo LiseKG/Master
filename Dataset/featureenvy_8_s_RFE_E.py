@@ -1,0 +1,84 @@
+class User:
+    def __init__(self, username):
+        self.username = username
+
+class SocialMediaPlatform:
+    def __init__(self):
+        self.pictures = {}  # User : [list of pictures posted - {each picture and number of likes}] 
+
+    def add_picture(self, user, picture_name):
+        if user not in self.pictures:
+            self.pictures[user] = []
+        self.pictures[user].append({"name": picture_name, "likes": 0})
+        return f"{user.username} posted a picture: {picture_name}"
+
+    def _find_picture(self, picture_name):
+        for user_pictures in self.pictures.values():
+            for picture in user_pictures:
+                if picture["name"] == picture_name:
+                    return picture
+        return None
+
+    def add_like(self, user, picture_name):
+        picture = self._find_picture(picture_name)
+        if picture is not None:
+            picture["likes"] += 1
+            return f"{user.username} liked the picture: {picture_name}"
+        return "Picture not found."
+
+    def remove_like(self, user, picture_name):
+        picture = self._find_picture(picture_name)
+        if picture is not None and picture["likes"] > 0:
+            picture["likes"] -= 1
+            return f"{user.username} unliked the picture: {picture_name}"
+        return "Picture not found or no likes to remove."
+
+    def show_total_likes(self, user, picture_name):
+        picture = self._find_picture(picture_name)
+        if picture is not None:
+            return f"Total likes for {picture_name}: {picture['likes']}"
+        return "Picture not found."
+
+    def show_picture_details(self, picture_name):
+        picture = self._find_picture(picture_name)
+        if picture is not None:
+            return f"Picture: {picture['name']} has {picture['likes']} likes."
+        return "Picture not found."
+
+def give_likes(platform, user):
+    platform.add_picture(user, "Pic 1")
+    platform.add_picture(user, "Pic 2")
+    
+    # Creating 5 new users to like the pictures
+    users = [User(f"User{i}") for i in range(1, 6)]
+    
+    like_pictures(platform, users)
+
+    total_likes_pic1 = platform.show_total_likes(users[0], "Pic 1")
+    total_likes_pic2 = platform.show_total_likes(users[1], "Pic 2")
+    
+    print(total_likes_pic1)
+    print(total_likes_pic2)
+    
+    platform.remove_like(users[2], "Pic 1")
+    total_likes_pic1_after_unlike = platform.show_total_likes(users[0], "Pic 1")
+    
+    print(total_likes_pic1_after_unlike)
+
+def like_pictures(platform, users):
+    for user in users:
+        platform.add_like(user, "Pic 1")
+        platform.add_like(user, "Pic 2")
+
+if __name__ == '__main__':
+    user = User("bob")
+    sm = SocialMediaPlatform()
+    print(sm.add_picture(user, "sunset"))
+    print(sm.add_like(user, "sunset"))
+    print(sm.show_total_likes(user, "sunset"))
+    print(sm.remove_like(user, "sunset"))
+    print(sm.show_total_likes(user, "sunset"))
+    print(sm.show_picture_details("sunset"))
+    print("---")
+    print(sm.add_like(user, "sunset"))
+    give_likes(sm, user)
