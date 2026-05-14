@@ -1,7 +1,7 @@
 # Master
 
 This setup involves:
-* The experiment framework (RAPL)
+* The measurement setup (RAPL)
 * The interfaces used to generate the files.
 * The ChatGPT prompt and setup
 * The files used (Dataset)
@@ -10,16 +10,16 @@ This setup involves:
 ````
 | <ChatGPT-env>
     | FileForGenerating
-        | #Example sripts
-        | README.md explaining how to setup (env and files)
+        | #Example scripts
+        | README.md on how to setup (env and files)
     | Scripts 
         | Scripts 
             | # the scripts used to generate the files
-    | prompt.md #All prompts used
+    | prompt.md #The prompts used
 | Dataset # The files used
-| Interfaces # Interfaces used to generate files   
+| Interfaces # The interfaces used
 | <RAPL-code>
-    | <m-types> #measurment types
+    | <m-types> #measurement types
     | <RAPL> #RAPL setup
     README.md # README from Green Software Lab
     ...
