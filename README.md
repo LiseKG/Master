@@ -7,5 +7,23 @@ This setup involves:
 * The files used (Dataset)
 * The turnoff script used before running the experiment
 
-The experimental setup includes a README with instructions on how to execute the framework.
-The ChatGPT folder explains how to set up and configure an environment, where to save API keys and how to create the specific files. 
+````
+| <ChatGPT-env>
+    | FileForGenerating
+        | #Example sripts
+        | README.md explaining how to setup (env and files)
+    | Scripts 
+        | Scripts 
+            | # the scripts used to generate the files
+    | prompt.md #All prompts used
+| Dataset # The files used
+| Interfaces # Interfaces used to generate files   
+| <RAPL-code>
+    | <m-types> #measurment types
+    | <RAPL> #RAPL setup
+    README.md # README from Green Software Lab
+    ...
+
+````
+
+** The folder names were changed from the original setup to make the setup easier to understand.
